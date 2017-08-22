@@ -4,6 +4,10 @@ const path = require('path');
 
 const expressValidator = require('express-validator');
 var app = express();
+
+var mongojs = require('mongojs')
+var db = mongojs('customerapp', ['users']);
+
 // logger is a custom middleware; must be declared before app.route() code
 // var logger = function(req, res, next) {
 //     console.log('Logging...');
@@ -81,9 +85,12 @@ var users = [
 ]
 
 app.get('/', function(req, res) {
-    res.render('index', {
-        title: 'Express Crash Course',
-        users: users
+    // find everything
+    db.users.find(function (err, users) {
+        res.render('index', {
+            title: 'Express Crash Course',
+            users: users
+        });    
     });
     //res.end();
 }); 
@@ -102,20 +109,20 @@ app.post('/users/add', function(req, res) {
             users: users,
             errors: errors
         });
-        //res.end();
+ 
     } else {
         var newUser = {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email
         }
-        console.log('Success');
-        users.push(newUser);
-        res.render('index', {
-            title: 'Express Crash Course',
-            users: users,
+        db.users.insert(newUser, function(err, result) {
+            if (err) {
+                console.log(err);
+            }
+            res.redirect('/');
         });
-        //res.end();
+
     }
 
 });

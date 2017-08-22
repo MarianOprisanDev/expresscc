@@ -14,4 +14,4 @@ Notes:
 
     * Using express-validator to validate user input
 
-    
+    * Using mongojs ORM for simplicity
