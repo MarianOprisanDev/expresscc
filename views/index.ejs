@@ -29,7 +29,7 @@
   <ul>
     <% users.forEach(function(user) { %>
         <li>First Name: <%= user.firstName %></li>
-        <li>Last Name: <%= user.lastName %></li> 
+        <li>Last Name: <%= user.lastName %> <a href="#" class="deleteUser" data-id='<%= user._id%>'>Delete</a></li> 
         <hr>       
     <% }) %>
   </ul>

@@ -28,10 +28,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-// Set static path
+// Set static path(for public/js/main.js file)
 // If we have an index.html file in the public folder, the Hello World! would be replaced by its contents
 // angular apps are used this way, and they are usually found in the public folder
-//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // In this snippet, the formParam value is going to get morphed into form body format useful for printing
 // imported from express-validator's documentation
@@ -127,6 +127,15 @@ app.post('/users/add', function(req, res) {
 
 });
 
+app.delete('/users/delete/:id', function(req, res) {
+    db.users.remove({_id: mongojs.ObjectId(req.params.id)}, function(err) {
+        if (err) {
+            console.log(err);
+        }
+        res.redirect('/');
+    })
+});
+
 app.listen(3000, function() {
     console.log('Server started on Port 3000');
-})
+});
