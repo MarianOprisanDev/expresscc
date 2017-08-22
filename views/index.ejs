@@ -1,0 +1,15 @@
+<% include partials/header %>
+  <h1>Hello from ejs</h1>
+  <hr>
+
+  <p><%= title %></p>
+
+  <ul>
+    <% users.forEach(function(user) { %>
+        <li>First Name: <%= user.firstName %></li>
+        <li>Last Name: <%= user.lastName %></li> 
+        <hr>       
+    <% }) %>
+  </ul>
+      
+<%include partials/footer %>
